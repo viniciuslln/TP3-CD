@@ -36,20 +36,21 @@ public class Cliente {
                 out.writeObject("solicitar");
                 
                 System.out.println("Receber tarefa...");
-                String tarefa = (String) in.readObject();
-                if(tarefa.equals("vazio")){
+                Task tarefa = (Task) in.readObject();
+                if(tarefa.id == -1){
                     System.out.println("Não há tarefas disponíveis, aguardando 3s para nova requisição.");
                     Thread.sleep(3000);
                     continue;
                 }
                 
                 System.out.println("Processar tarefa...");
-                String req = receberTarefa(tarefa);
-                
+                processarTarefa(tarefa);
+                        
                 out.writeObject("responder");
+                
 
                 System.out.println("Enviar resposta...");
-                out.writeObject(processarTarefa(req));
+                out.writeObject(tarefa);
 
             } catch (ClassNotFoundException | InterruptedException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,12 +58,23 @@ public class Cliente {
         }
     }
 
-    public static String receberTarefa(String req) {
-        return req;
+    public static void processarTarefa(Task tarefa) {
+        //return "gogogo: "+ tarefa;
+        // Calcular distancia
+        tarefa.x = getRandom();
+        tarefa.y = getRandom();
+        
+        
+        tarefa.dentro = Math.sqrt( (tarefa.x*tarefa.x) + (tarefa.y*tarefa.y) ) <= 1;
+                
     }
-
-    public static String processarTarefa(String tarefa) {
-        return "gogogo: "+ tarefa;
+    
+    public static double getRandom(){
+        double random = (Math.random() * (2.0 - 0.0)) + 0.0; //0-s0.99 -  1-2
+        if(random < 1.0) {
+            return (random /2.0) * -1.0; 
+        }
+        else return (random /2.0);
     }
 
 }
