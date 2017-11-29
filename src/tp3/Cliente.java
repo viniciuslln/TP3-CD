@@ -11,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static tp3.TP3.takeTask;
 
 /**
  *
@@ -25,7 +24,7 @@ public class Cliente {
      */
     public static void main(String[] args) throws IOException {
         String serverAddr = args.length > 1 ? args[0] : "localhost";
-        int serverPort = args.length > 2 ? Integer.parseInt(args[1]) : 6969;
+        int serverPort = args.length > 2 ? Integer.parseInt(args[1]) : 8989;
 
         Socket server = new Socket(serverAddr, serverPort);
         ObjectOutputStream out = new ObjectOutputStream(server.getOutputStream());

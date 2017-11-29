@@ -18,20 +18,21 @@ import java.util.logging.Logger;
  *
  * @author p805924
  */
-public class TP3 {
+public class Servidor {
 
     public static ConcurrentLinkedQueue<Task> taskSack = new ConcurrentLinkedQueue<>();
     public static ConcurrentLinkedQueue<Task> taskSackDentro = new ConcurrentLinkedQueue<>();
     public static ConcurrentLinkedQueue<Task> taskSackFora = new ConcurrentLinkedQueue<>();
     public static double pi = 0;
+    public static int n;
 
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        int port = args.length > 0 ? Integer.parseInt(args[0]) : 6969;
-        int n = args.length > 1 ? Integer.parseInt(args[1]) : 1000;
+        int port = args.length > 0 ? Integer.parseInt(args[0]) : 8989;
+        n = args.length > 1 ? Integer.parseInt(args[1]) : 1000000;
         ServerSocket server = new ServerSocket(port);
 
         new Thread(() -> {
@@ -42,7 +43,7 @@ public class TP3 {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(TP3.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             updateResponse();
@@ -94,7 +95,7 @@ public class TP3 {
                     }
 
                 } catch (IOException | ClassNotFoundException ex) {
-                    Logger.getLogger(TP3.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -117,7 +118,8 @@ public class TP3 {
     }
 
     public static synchronized void updateResponse() {
-        pi = ((double)taskSackDentro.size())/((double)taskSackFora.size());
+     //   pi = ((double)taskSackDentro.size())/((double)taskSackFora.size());
+        pi = (( 4.0 * (double)taskSackDentro.size())/ ((double)n));
         System.out.println("Pi: " + pi);
     }
 
